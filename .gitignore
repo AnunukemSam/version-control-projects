@@ -1,0 +1,13 @@
+# Ignore logs
+*.log
+
+# Ignore temporary files
+*.tmp
+
+# Ignore sensitive Ansible inventory files (if needed)
+inventory/host_vars/*
+inventory/group_vars/*
+
+# Ignore backup files
+*~
+
