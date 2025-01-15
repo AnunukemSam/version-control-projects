@@ -1,0 +1,25 @@
+---
+- name: Configure web servers
+  hosts: web_servers
+  become: yes
+  tasks:
+    - name: Update package repository
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Start and enable webserver service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Copy HTML file to webserver document root
+      copy:
+        src: /home/emmie/version-control-projects/webserver-ansible-setup/files/index.html
+        dest: /var/www/html/index.html
+
