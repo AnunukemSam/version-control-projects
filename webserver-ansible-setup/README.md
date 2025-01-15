@@ -212,14 +212,10 @@ git push origin main
 
 ### 8. **Screenshot and Documentation**
 
-![Playbook Output](version-control-projects/webserver-ansible-setup/screenshots/playbook_output.png)
+![Playbook Output](https://raw.githubusercontent.com/AnunukemSam/version-control-projects/main/webserver-ansible-setup/screenshots/playbook_output.png)
 *Above: The output after running the Ansible playbook.*
 
-![Web Server Index](version-control-projects/webserver-ansible-setup/screenshots/webserver_index.png)
+![Web Server Index](https://raw.githubusercontent.com/AnunukemSam/version-control-projects/main/webserver-ansible-setup/screenshots/webserver_index.png)
 *Above: The web page served by Nginx after playbook execution.*
 ```
-
-### 9. **Conclusion**
-
-By following this process, you've set up a basic web server with Nginx using Ansible, automated the setup with a playbook, and maintained version control with Git. The project demonstrates how automation tools like Ansible can save time and ensure consistent configurations across multiple servers.
 
