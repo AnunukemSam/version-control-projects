@@ -6,6 +6,9 @@ This project involves configuring a simple web server setup using Ansible, along
 ### **Use Case Scenario**
 In a real-world scenario, you may have multiple web servers (either virtual machines or physical machines) that require consistent setup. Instead of manually configuring each server, you use Ansible to automate the setup, ensuring all your servers are consistently configured.
 
+### **Architectural Diagram**
+![Project Archtectural Diagram](https://raw.githubusercontent.com/AnunukemSam/version-control-projects/main/webserver-ansible-setup/screenshots/Version_Control_Web-Server_Setup_Architecture.drawio.png)
+
 ---
 
 ## **Prerequisites**
