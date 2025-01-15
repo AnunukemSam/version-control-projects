@@ -212,14 +212,12 @@ git push origin main
 
 ### 8. **Screenshot and Documentation**
 
-![Playbook Output](webserver-ansible-setup/screenshots/playbook_output.png)
+![Playbook Output](version-control-projects/webserver-ansible-setup/screenshots/playbook_output.png)
 *Above: The output after running the Ansible playbook.*
 
-![Web Server Index](webserver-ansible-setup/screenshots/webserver_index.png)
+![Web Server Index](version-control-projects/webserver-ansible-setup/screenshots/webserver_index.png)
 *Above: The web page served by Nginx after playbook execution.*
 ```
-
----
 
 ### 9. **Conclusion**
 
