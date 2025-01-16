@@ -76,3 +76,108 @@ To automate CI/CD tasks, Jenkins is installed and configured on our local machin
 
 ---
 
+# Portfolio Website Project Documentation
+
+## Step 3: Setting Up the Portfolio Website Repository
+
+### Objective:
+Organize project files in a structured repository and prepare for collaborative development.
+
+### Instructions:
+1. **Create a Directory Structure:**
+   - Inside your repository, create a folder named `ci-cd-portfolio-website`.
+   - Within this folder, create two subdirectories:
+     - `project` (for the website code).
+     - `documentation` (for related project documentation).
+   - Add a `README.md` file in the `ci-cd-portfolio-website` folder to document project details.
+
+2. **Update the Repository:**
+   - Add the directory structure to the repository.
+   - Commit the changes with a clear commit message.
+
+### Example Command:
+```bash
+mkdir -p ci-cd-portfolio-website/project ci-cd-portfolio-website/documentation
+cd ci-cd-portfolio-website
+nano README.md  # Add project details
+```
+Commit message:
+```
+feat: Add initial directory structure and README.md
+```
+
+---
+
+## Step 4: Adding the Website Files
+
+### Objective:
+Develop and upload a basic, attractive portfolio website.
+
+### Instructions:
+1. **Download or Create Website Files:**
+   - The website includes three main files:
+     - `index.html`: Contains the structure and content of the website.
+     - `style.css`: Defines the website's appearance.
+     - `script.js`: Adds interactivity to the website.
+
+2. **Place Files in the `project` Directory:**
+   - Add the provided HTML, CSS, and JS files to the `project` directory.
+   - Review the code to understand its functionality.
+
+3. **Update the Repository:**
+   - Commit the changes with a clear commit message.
+
+### Example Command:
+```bash
+cd ci-cd-portfolio-website/project
+# Add files here
+```
+Commit message:
+```
+feat: Add HTML, CSS, and JS files for the portfolio website
+```
+
+---
+
+## Step 5: Testing the Portfolio Website Locally
+
+### Objective:
+Ensure the website functions as intended by testing it on a local server.
+
+### Instructions:
+1. **Start a Local HTTP Server:**
+   - Navigate to the `project` directory in the terminal.
+   - Run the following command to start a server:
+     ```bash
+     python3 -m http.server 8000
+     ```
+   - This starts a server accessible at `http://localhost:8000`.
+
+2. **Open the Website in a Browser:**
+   - Open a browser and enter the URL: `http://localhost:8000`.
+   - Verify that the website loads correctly and appears as expected.
+
+3. **Document Testing Results:**
+   - Note any issues (e.g., broken links, alignment issues).
+   - If no issues are found, document that testing was successful.
+
+---
+
+## Notes for Collaboration
+1. **Commit Message Guidelines:**
+   - Use clear and descriptive commit messages following this format:
+     ```
+     <type>: <short summary>
+
+     <optional detailed description>
+     ```
+   - Example:
+     ```
+     feat: Add HTML, CSS, and JS files for the portfolio website
+
+     Included a responsive design with interactivity using JavaScript.
+     ```
+
+
+---
+

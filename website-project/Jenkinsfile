@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AnunukemSam/version-control-projects.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the website...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying website...'
+                sh 'cp -r * /var/www/portfolio-website'
+            }
+        }
+    }
+}
+
