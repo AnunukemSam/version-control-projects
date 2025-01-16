@@ -17,11 +17,13 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying website...'
-                sh 'cp -r * /var/www/portfolio-website'
-            }
-        }
+    steps {
+        echo 'Deploying website...'
+        sh '''
+        mkdir -p /var/www/portfolio-website
+        cp -r README.md webserver-ansible-setup website-project /var/www/portfolio-website
+        '''
     }
 }
+
 
