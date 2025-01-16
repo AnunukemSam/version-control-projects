@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying website...'
-                sh 'cp -r * /var/www/portfolio-website'
+                sh 'cp -r * /var/www/html'
             }
         }
     }
