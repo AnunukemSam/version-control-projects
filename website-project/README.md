@@ -1,183 +1,271 @@
-# CI/CD Pipeline for Portfolio Website
+# **CI/CD Pipeline for Portfolio Website with Jenkins and GitHub Integration**
 
-This project demonstrates a basic CI/CD pipeline using Jenkins for automating the deployment of a portfolio website. It includes:
-- A simple static portfolio website.
-- Jenkins pipeline to test and deploy the website automatically.
-- Best practices for CI/CD and security.
-
-## Directory Structure
-- `website/`: Contains the source code for the portfolio website.
-- `docs/`: Documentation, screenshots, and diagrams.
-- `Jenkinsfile`: The pipeline configuration for Jenkins.
-- `.gitignore`: Lists files to exclude from version control.
+This comprehensive guide walks you through setting up a **CI/CD pipeline** for a portfolio website using **Jenkins**, **GitHub**, and a **web server** (e.g., Nginx or Apache2). We’ll also cover optional **Ngrok** usage for webhook testing.
 
 ---
 
-### **Installing and Setting Up Jenkins**
+## **Objective**
 
-**Purpose:**  
-To automate CI/CD tasks, Jenkins is installed and configured on our local machines to integrate with the repository and perform build and deployment pipelines.
+- Automate the building, testing, and deployment of a portfolio website.
+- Use GitHub for version control and Jenkins for automation.
+- Host the website on a web server such as Nginx or Apache2.
 
 ---
 
-#### **Installation Steps:**
+## **Directory Structure**
 
-1. **For Windows (Host 1):**
-   - Download the Jenkins installer from [Jenkins Downloads](https://www.jenkins.io/download/).
-   - Run the installer and follow the setup instructions. Ensure Java 11 or 17 is installed if prompted.
-   - After installation, open your browser and navigate to `http://localhost:8080`.
-   - Retrieve the initial admin password from:  
-     `C:\Program Files (x86)\Jenkins\secrets\initialAdminPassword`.
-   - Paste the password in the browser prompt to unlock Jenkins.
-   - Select "Install Suggested Plugins" and set up an admin user.
+Organize your project files as follows:
 
-2. **For macOS (Host 2):**
-   - Open the terminal and install Jenkins using Homebrew:  
+```
+project-root/
+├── website/                   # Source code for the portfolio website
+│   ├── index.html             # Homepage
+│   ├── assets/                # Images, stylesheets, JavaScript files
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   └── README.md              # Website instructions
+├── docs/                      # Documentation and resources
+│   ├── pipeline-diagram.png   # CI/CD pipeline visualization
+│   ├── webhook-setup.md       # GitHub webhook setup guide
+│   └── other-documents/       # Additional resources
+├── Jenkinsfile                # Jenkins pipeline configuration
+├── .gitignore                 # Files to exclude from Git
+```
+
+### **Explanation**:
+- **website/**: Houses the website's source code.
+- **docs/**: Includes guides, screenshots, and diagrams.
+- **Jenkinsfile**: Defines the Jenkins pipeline stages.
+- **.gitignore**: Prevents unwanted files (e.g., `node_modules`, `.DS_Store`) from being tracked.
+
+---
+
+## **Prerequisites**
+
+Ensure the following are set up on your system:
+
+1. **Ubuntu VM** for Jenkins and the web server.
+2. **GitHub repository** to store the website’s source code.
+3. **Java Development Kit (JDK)**, version 17 or 21, installed on the VM.
+4. **Git** installed on the VM.
+5. **Ngrok** (optional) for exposing local services to the internet.
+
+---
+
+## **Detailed Steps**
+
+---
+
+### **Step 1: Install Jenkins on Ubuntu**
+
+1. **Update your system**:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+
+2. **Install Java**:
+   - For JDK 17:
      ```bash
-     brew install jenkins-lts
+     sudo apt install openjdk-17-jdk -y
      ```
-   - Start Jenkins with:  
+   - For JDK 21:
      ```bash
-     brew services start jenkins-lts
+     sudo apt install openjdk-21-jdk -y
      ```
-   - Access Jenkins via `http://localhost:8080` in the browser.
-   - Retrieve the initial admin password from:  
-     `/Users/<username>/.jenkins/secrets/initialAdminPassword`.
-   - Paste the password to unlock Jenkins.
-   - Select "Install Suggested Plugins" and set up an admin user.
 
----
+3. **Install Jenkins**:
+   ```bash
+   wget -q -O - https://pkg.jenkins.io/keys/jenkins.io.key | sudo apt-key add -
+   echo "deb http://pkg.jenkins.io/debian/ stable main" | sudo tee /etc/apt/sources.list.d/jenkins.list
+   sudo apt update
+   sudo apt install jenkins -y
+   ```
 
-#### **Post-Installation Steps:**
+4. **Start and enable Jenkins**:
+   ```bash
+   sudo systemctl start jenkins
+   sudo systemctl enable jenkins
+   ```
 
-1. **Install Git Plugin:**
-   - Navigate to: **Manage Jenkins > Manage Plugins > Available Plugins**.
-   - Search for **Git Plugin** and click "Install without restart."
-
-2. **Configure Git in Jenkins:**
-   - Go to **Manage Jenkins > Global Tool Configuration > Git**.
-   - Ensure Jenkins detects Git. If not, provide the path to the Git executable:  
-     - For Windows: Check `git --version` in Command Prompt to find the path.  
-     - For macOS: Homebrew handles this automatically.
-
----
-
-#### **Verification:**
-- Open the browser and ensure Jenkins is running on `http://localhost:8080`.
-- Confirm the Git plugin is installed and Jenkins can detect Git.
-
----
-
-**Screenshots to Include:**
-1. Jenkins welcome page (`http://localhost:8080`).
-2. Admin password entry page.
-3. Plugin installation progress.
-4. Git configuration in **Global Tool Configuration**.
-
----
-
-# Portfolio Website Project Documentation
-
-## Step 3: Setting Up the Portfolio Website Repository
-
-### Objective:
-Organize project files in a structured repository and prepare for collaborative development.
-
-### Instructions:
-1. **Create a Directory Structure:**
-   - Inside your repository, create a folder named `ci-cd-portfolio-website`.
-   - Within this folder, create two subdirectories:
-     - `project` (for the website code).
-     - `documentation` (for related project documentation).
-   - Add a `README.md` file in the `ci-cd-portfolio-website` folder to document project details.
-
-2. **Update the Repository:**
-   - Add the directory structure to the repository.
-   - Commit the changes with a clear commit message.
-
-### Example Command:
-```bash
-mkdir -p ci-cd-portfolio-website/project ci-cd-portfolio-website/documentation
-cd ci-cd-portfolio-website
-nano README.md  # Add project details
-```
-Commit message:
-```
-feat: Add initial directory structure and README.md
-```
-
----
-
-## Step 4: Adding the Website Files
-
-### Objective:
-Develop and upload a basic, attractive portfolio website.
-
-### Instructions:
-1. **Download or Create Website Files:**
-   - The website includes three main files:
-     - `index.html`: Contains the structure and content of the website.
-     - `style.css`: Defines the website's appearance.
-     - `script.js`: Adds interactivity to the website.
-
-2. **Place Files in the `project` Directory:**
-   - Add the provided HTML, CSS, and JS files to the `project` directory.
-   - Review the code to understand its functionality.
-
-3. **Update the Repository:**
-   - Commit the changes with a clear commit message.
-
-### Example Command:
-```bash
-cd ci-cd-portfolio-website/project
-# Add files here
-```
-Commit message:
-```
-feat: Add HTML, CSS, and JS files for the portfolio website
-```
-
----
-
-## Step 5: Testing the Portfolio Website Locally
-
-### Objective:
-Ensure the website functions as intended by testing it on a local server.
-
-### Instructions:
-1. **Start a Local HTTP Server:**
-   - Navigate to the `project` directory in the terminal.
-   - Run the following command to start a server:
+5. **Access Jenkins**:
+   - Open your browser and navigate to `http://<your-VM-IP>:8080`.
+   - Retrieve the Jenkins unlock key:
      ```bash
-     python3 -m http.server 8000
+     sudo cat /var/lib/jenkins/secrets/initialAdminPassword
      ```
-   - This starts a server accessible at `http://localhost:8000`.
-
-2. **Open the Website in a Browser:**
-   - Open a browser and enter the URL: `http://localhost:8000`.
-   - Verify that the website loads correctly and appears as expected.
-
-3. **Document Testing Results:**
-   - Note any issues (e.g., broken links, alignment issues).
-   - If no issues are found, document that testing was successful.
+   - Paste the key to unlock Jenkins and install the **recommended plugins**.
 
 ---
 
-## Notes for Collaboration
-1. **Commit Message Guidelines:**
-   - Use clear and descriptive commit messages following this format:
-     ```
-     <type>: <short summary>
+### **Step 2: Install and Configure Nginx**
 
-     <optional detailed description>
-     ```
-   - Example:
-     ```
-     feat: Add HTML, CSS, and JS files for the portfolio website
+1. **Install Nginx**:
+   ```bash
+   sudo apt install nginx -y
+   ```
 
-     Included a responsive design with interactivity using JavaScript.
-     ```
+2. **Start and enable Nginx**:
+   ```bash
+   sudo systemctl start nginx
+   sudo systemctl enable nginx
+   ```
 
+3. **Verify the setup**:
+   Visit `http://<your-VM-IP>` in your browser to check if Nginx is running.
+
+---
+
+### **Step 3: Install Git**
+
+1. **Install Git**:
+   ```bash
+   sudo apt install git -y
+   ```
+
+2. **Verify installation**:
+   ```bash
+   git --version
+   ```
+
+3. **Configure Git**:
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "youremail@example.com"
+   ```
+
+---
+
+### **Step 4: Set Up GitHub Webhooks**
+
+**Why Use Webhooks?**  
+Webhooks allow GitHub to notify Jenkins about changes in the repository instantly, triggering automation workflows without delay.
+
+#### **Steps to Set Up Webhooks**:
+1. Navigate to your GitHub repository:
+   - Go to **Settings** > **Webhooks** > **Add Webhook**.
+2. Configure the webhook:
+   - **Payload URL**: Use `http://<your-Jenkins-URL>:8080/github-webhook/` (or Ngrok for local testing).
+   - **Content type**: `application/json`.
+   - **Events**: Select **Just the push event**.
+3. Save the webhook.
+
+---
+
+### **Step 5: Configure Git in Jenkins**
+Now we need to configure GitHub credentials and ensure Git is available in Jenkins.
+
+Install Git in Jenkins:
+
+    Go to Manage Jenkins > Global Tool Configuration.
+    Under Git, provide the path to the Git executable:
+    Run the following command on your VM to locate Git:
+    ```bash
+        which git
+    Example output: /usr/bin/git.
+
+    Add GitHub Credentials:
+
+    Generate a Personal Access Token (PAT) from GitHub (for authentication):
+    Go to GitHub > Settings > Developer Settings > Personal Access Tokens > Generate new token.
+    Select the required scopes (e.g., repo, admin:repo_hook).
+    Save the token.
+    
+    Add the token to Jenkins:
+    Go to Manage Jenkins > Manage Credentials > Global Credentials > Add Credentials.
+    Username: Your GitHub username.
+    Password: Paste your Personal Access Token (PAT).
+    Set ID as GitHub-PAT.
+
+### **Step 6: Create and Configure a Jenkins Pipeline**
+
+1. **Create a Pipeline Job**:
+   - Log in to Jenkins and click **New Item**.
+   - Select **Pipeline** and name it (e.g., "Portfolio Pipeline").
+
+2. **Set Up the Pipeline**:
+   - Under **Pipeline**, choose **Pipeline script from SCM**.
+   - Select **Git** and enter your repository URL.
+   - Add credentials (e.g., GitHub PAT).
+
+---
+
+### **Step 7: Write the Jenkinsfile**
+
+Here’s a sample **Jenkinsfile**:
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: '*/main']], 
+                              userRemoteConfigs: [[
+                                  url: 'https://github.com/yourusername/portfolio-website.git', 
+                                  credentialsId: 'GitHub-PAT'
+                              ]]])
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the website...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying website...'
+                sh 'sudo cp -r * /var/www/html'
+            }
+        }
+    }
+}
+```
+
+#### **Pipeline Stages Explained**:
+1. **Checkout**: Pulls the latest code from GitHub.
+2. **Build**: Prepares the code (e.g., minifying CSS or JS).
+3. **Test**: Verifies functionality and code quality.
+4. **Deploy**: Deploys the code to the web server.
+
+---
+
+### **Step 8: Ngrok for Local Webhook Testing**
+
+1. **Install Ngrok**:
+   ```bash
+   sudo snap install ngrok
+   ```
+
+2. **Expose Jenkins**:
+   ```bash
+   ngrok http 8080
+   ```
+
+3. **Update the webhook**:
+   - Use the public URL provided by Ngrok (e.g., `http://<subdomain>.ngrok.io/github-webhook/`).
+
+---
+
+### **Step 9: Test the Pipeline**
+
+1. **Push Changes to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Initial pipeline setup"
+   git push origin main
+   ```
+
+2. **Monitor Jenkins**:
+   - The pipeline should trigger automatically, building, testing, and deploying your portfolio website.
 
 ---
 
