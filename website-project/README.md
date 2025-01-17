@@ -4,6 +4,10 @@ This comprehensive guide walks you through setting up a **CI/CD pipeline** for a
 
 ---
 
+## **Architectural Diagram**
+
+![Architectural Diagram](https://raw.githubusercontent.com/AnunukemSam/version-control-projects/main/website-project/screenshots/CI_CD_Project.drawio.png)
+
 ## **Objective**
 
 - Automate the building, testing, and deployment of a portfolio website.
@@ -155,27 +159,27 @@ Webhooks allow GitHub to notify Jenkins about changes in the repository instantl
 ### **Step 5: Configure Git in Jenkins**
 Now we need to configure GitHub credentials and ensure Git is available in Jenkins.
 
-Install Git in Jenkins:
+#### **Install Git in Jenkins**:
 
-    Go to Manage Jenkins > Global Tool Configuration.
-    Under Git, provide the path to the Git executable:
-    Run the following command on your VM to locate Git:
-    ```bash
-        which git
+1. Go to Manage Jenkins > Global Tool Configuration.
+    - Under Git, provide the path to the Git executable:
+    - Run the following command on your VM to locate Git:
+        ```bash
+            which git
+        ```
     Example output: /usr/bin/git.
 
-    Add GitHub Credentials:
-
-    Generate a Personal Access Token (PAT) from GitHub (for authentication):
-    Go to GitHub > Settings > Developer Settings > Personal Access Tokens > Generate new token.
-    Select the required scopes (e.g., repo, admin:repo_hook).
-    Save the token.
+2. Add GitHub Credentials:
+    - Generate a Personal Access Token (PAT) from GitHub (for authentication):
+    - Go to GitHub > Settings > Developer Settings > Personal Access Tokens > Generate new token.
+    - Select the required scopes (e.g., repo, admin:repo_hook).
+    - Save the token.
     
-    Add the token to Jenkins:
-    Go to Manage Jenkins > Manage Credentials > Global Credentials > Add Credentials.
-    Username: Your GitHub username.
-    Password: Paste your Personal Access Token (PAT).
-    Set ID as GitHub-PAT.
+3. Add the token to Jenkins:
+    - Go to Manage Jenkins > Manage Credentials > Global Credentials > Add Credentials.
+    - Username: Your GitHub username.
+    - Password: Paste your Personal Access Token (PAT).
+    - Set ID as GitHub-PAT.
 
 ### **Step 6: Create and Configure a Jenkins Pipeline**
 
