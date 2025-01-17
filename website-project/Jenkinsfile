@@ -4,13 +4,12 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    // Force the use of the GitHub PAT for authentication
                     checkout([$class: 'GitSCM', 
                               branches: [[name: '*/main']], 
                               extensions: [[$class: 'CleanBeforeCheckout']], 
                               userRemoteConfigs: [[
                                   url: 'https://github.com/AnunukemSam/version-control-projects.git', 
-                                  credentialsId: 'GitHub-PAT'  // Use the credentials ID
+                                  credentialsId: 'GitHub-PAT' 
                               ]]])
                 }
             }
