@@ -6,7 +6,7 @@ This comprehensive guide walks you through setting up a **CI/CD pipeline** for a
 
 ## **Architectural Diagram**
 
-![Architectural Diagram](https://raw.githubusercontent.com/AnunukemSam/version-control-projects/main/website-project/screenshots/CI_CD_Project.drawio.png)
+![Architectural Diagram](https://github.com/AnunukemSam/version-control-projects/blob/main/website-project/screenshots/CI_CD_Project.drawio.png?raw=true)
 
 ## **Objective**
 
