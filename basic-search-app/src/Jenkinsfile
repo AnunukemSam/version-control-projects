@@ -13,7 +13,7 @@ pipeline {
                         python3 -m venv venv
                         . venv/bin/activate
                         pip install --upgrade pip
-                        pip install -r src/requirements.txt
+                        pip install -r basic-search-app/src/requirements.txt
                     """
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
                 script {
                     sh """
                         . venv/bin/activate
-                        pytest src/tests
+                        pytest basic-search-app/src/tests
                     """
                 }
             }
