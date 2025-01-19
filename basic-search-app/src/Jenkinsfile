@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        PYTHONPATH = "${env.PYTHONPATH}:/var/lib/jenkins/workspace/SearchAppPipeline/basic-search-app/src"
+    }
     stages {
         stage('Clone Repository') {
             steps {
